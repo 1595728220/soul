@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/star/star",
     "pages/square/square",
+    "pages/star/star",
     "pages/release/release",
     "pages/chat/chat",
     "pages/self/self"
@@ -15,7 +15,9 @@
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
-    "van-button": "vant-weapp/button/index"
+    "van-button": "vant-weapp/button/index",
+    "van-tabs":"vant-weapp/tabs/index",
+    "van-tab":"vant-weapp/tab/index"
   },
   "tabBar": {
     "color": "#333",
@@ -48,8 +50,8 @@
       {
         "pagePath": "pages/self/self",
         "text": "自己",
-        "iconPath": "images/tabbar/icon-test.png",
-        "selectedIconPath": "images/tabbar/icon-test.png"
+        "iconPath": "images/tabbar/avatar1.png",
+        "selectedIconPath": "images/tabbar/avatar1.png"
       }
     ]
   }

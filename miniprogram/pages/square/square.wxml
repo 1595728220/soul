@@ -1,2 +1,12 @@
 <!--pages/square/square.wxml-->
-<text>pages/square/square.wxml</text>
+<van-tabs sticky>
+  <van-tab title="关注">
+    <square-banner bannerkey="关注"></square-banner>
+  </van-tab>
+  <van-tab title="推荐">
+    <square-banner bannerkey="推荐"></square-banner>
+  </van-tab>
+  <van-tab title="最新">
+    <square-banner bannerkey="最新"></square-banner>
+  </van-tab>
+</van-tabs>
