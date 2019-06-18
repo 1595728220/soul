@@ -1,9 +1,11 @@
+@import "../../style/stylesheet.wxss";
 /* components/squareitem/squareitem.wxss */
 .square-item{
-  padding:20rpx;
+  padding:40rpx 20rpx;
   color:#666;
   font-size:24rpx;
   display:flex;
+  border-bottom:1px solid #e3e3e3;
 }
 .square-img{
   width:64rpx;
@@ -12,4 +14,35 @@
 .square-detail{
   flex-grow: 1;
   margin-left:20rpx;
+}
+.square-nick{
+  color:#34DBD7;
+  font-size:28rpx;
+}
+.square-time{
+  color:#999;
+}
+.square-content{
+  margin-top:40rpx;
+  color:#333;
+  font-size:30rpx;
+}
+.bottom-button{
+  margin-top:20rpx;
+  display:flex;
+  justify-content: space-around;
+}
+.iconfont{
+  font-size:56rpx;
+}
+.iconfont>text{
+  font-size:24rpx;
+  color:#666;
+}
+.icon-xihuan{
+  color:#CC0001;
+}
+.icon-fanhui{
+  font-size:64rpx;
+  /* transform: rotate(180deg) */
 }

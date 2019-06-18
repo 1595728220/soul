@@ -4,7 +4,9 @@
     "pages/star/star",
     "pages/release/release",
     "pages/chat/chat",
-    "pages/self/self"
+    "pages/self/self",
+    "pages/share/share",
+    "pages/comment/comment"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

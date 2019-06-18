@@ -14,19 +14,14 @@ Component({
    * 组件的初始数据
    */
   data: {
-    list:[]
+    list: []
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-
-  },
-  /*组件的的生命周期也可以在 lifetimes 字段内进行声明*/
-  lifetimes: {
-    created: function() {
-      //在组件实例刚刚被创建时执行
+    loadMsg() {
       let wherequery = {}
       switch (this.data.listkey) {
         case "关注":
@@ -50,11 +45,18 @@ Component({
         .get().then(res => {
           console.log(res)
           this.setData({
-            list:res.data
+            list: res.data
           })
           // console.log(this.data.list)
         })
         .catch(err => console.log(err))
+    }
+  },
+  /*组件的的生命周期也可以在 lifetimes 字段内进行声明*/
+  lifetimes: {
+    created: function() {
+      //在组件实例刚刚被创建时执行
+      this.loadMsg()
     },
   }
 })

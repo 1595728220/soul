@@ -2,10 +2,17 @@
 <view class="square-item">
   <image src="../../images/tabbar/{{item.avatar}}" class="square-img"></image>
   <view class="square-detail">
-    <view>{{item.nick}}</view>
-    <view>{{squareitem.getTime(item.time)}}</view>
-    <view>{{item.content}}</view>
+    <view class="square-nick">{{item.nick}}</view>
+    <view class="square-time">{{squareitem.getTime(item.time)}}</view>
+    <view class="square-content">{{item.content}}</view>
+    <view class="bottom-button">
+      <view class="iconfont {{item.xihuan?'icon-xihuan':'icon-xihuan-xianxing'}}" bindtap="changeXiHuan" data-xihuan="{{item.xihuan}}" data-id="{{item._id}}" data-count="{{item.xihuancount}}">
+        <text>{{squareitem.numChange(item.xihuancount)}}</text>
+      </view>
+      <view class="iconfont icon-xiaoxi" bindtap="pinglun"><text>{{squareitem.numChange(item.msgcount)}}</text></view>
+      <view class="iconfont icon-fanhui" bindtap="fenxiang"><text>{{squareitem.numChange(item.fenxiangcount)}}</text></view>
+    </view>
   </view>
 
 </view>
-<wxs module=squareitem" src="./squareitem.wxs"></wxs>
+<wxs module="squareitem" src="./squareitem.wxs"></wxs>
