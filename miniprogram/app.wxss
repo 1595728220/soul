@@ -1,3 +1,5 @@
+/**引入图标字体文件**/
+@import "style/stylesheet.wxss";
 /**app.wxss**/
 .container {
   display: flex;
