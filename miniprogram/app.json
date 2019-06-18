@@ -1,16 +1,56 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/star/star",
+    "pages/square/square",
+    "pages/release/release",
+    "pages/chat/chat",
+    "pages/self/self"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTitleText": "soul",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
     "van-button": "vant-weapp/button/index"
+  },
+  "tabBar": {
+    "color": "#333",
+    "selectedColor": "#333",
+    "list": [
+      {
+        "pagePath": "pages/star/star",
+        "text": "星球",
+        "iconPath": "images/tabbar/star.png",
+        "selectedIconPath": "images/tabbar/star-selected.png"
+      },
+      {
+        "pagePath": "pages/square/square",
+        "text": "广场",
+        "iconPath": "images/tabbar/yanjing.png",
+        "selectedIconPath": "images/tabbar/yanjing-selected.png"
+      },
+      {
+        "pagePath": "pages/release/release",
+        "text": "发布瞬间",
+        "iconPath": "images/tabbar/dongtai.png",
+        "selectedIconPath": "images/tabbar/dongtai-selected.png"
+      },
+      {
+        "pagePath": "pages/chat/chat",
+        "text": "聊天",
+        "iconPath": "images/tabbar/xiaoxi.png",
+        "selectedIconPath": "images/tabbar/xiaoxi-selected.png"
+      },
+      {
+        "pagePath": "pages/self/self",
+        "text": "自己",
+        "iconPath": "images/tabbar/icon-test.png",
+        "selectedIconPath": "images/tabbar/icon-test.png"
+      }
+    ]
   }
 }
