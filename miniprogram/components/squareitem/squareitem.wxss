@@ -1,0 +1,15 @@
+/* components/squareitem/squareitem.wxss */
+.square-item{
+  padding:20rpx;
+  color:#666;
+  font-size:24rpx;
+  display:flex;
+}
+.square-img{
+  width:64rpx;
+  height:64rpx;
+}
+.square-detail{
+  flex-grow: 1;
+  margin-left:20rpx;
+}

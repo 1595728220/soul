@@ -1,0 +1,11 @@
+<!--components/squareitem/squareitem.wxml-->
+<view class="square-item">
+  <image src="../../images/tabbar/{{item.avatar}}" class="square-img"></image>
+  <view class="square-detail">
+    <view>{{item.nick}}</view>
+    <view>{{squareitem.getTime(item.time)}}</view>
+    <view>{{item.content}}</view>
+  </view>
+
+</view>
+<wxs module=squareitem" src="./squareitem.wxs"></wxs>

@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "square-banner": "../../components/squarebanner/squarebanner"
+    "square-list": "../../components/squarelist/squarelist"
   }
 }

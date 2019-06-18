@@ -1,0 +1,4 @@
+<!--components/squarebanner/squarebanner.wxml-->
+<view>
+  <square-item item="{{item}}" wx:for="{{list}}" wx:key="{{index}}"></square-item>
+</view>

@@ -1,2 +1,0 @@
-<!--components/squarebanner/squarebanner.wxml-->
-<view>{{bannerkey}}</view>
