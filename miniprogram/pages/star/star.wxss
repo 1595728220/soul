@@ -1,1 +1,4 @@
 /* pages/star/star.wxss */
+.star{
+  background:#222;
+}

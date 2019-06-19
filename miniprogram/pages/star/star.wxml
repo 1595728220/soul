@@ -1,3 +1,4 @@
 <!--pages/star/star.wxml-->
-<canvas style="width:{{windowWidth}}px;height:{{windowHeight}}px" canvas-id="stage"></canvas>
-
+<view class="star">
+  <canvas style="width:{{windowWidth}}px;height:{{windowHeight}}px" canvas-id="stage"></canvas>
+</view>

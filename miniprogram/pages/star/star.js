@@ -1,8 +1,8 @@
 // pages/star/star.js
 const gl = require("../../miniprogram_npm/gl-matrix/index.js"),
   ctx = wx.createCanvasContext('stage')
-let m,p,v, points = [],
-  numOfPoints = 10000,
+let m, p, v, points = [],
+  numOfPoints = 30,
   timer
 Page({
 
@@ -16,9 +16,11 @@ Page({
   init() {
     // create points
     for (let i = 0; i < numOfPoints; i++) {
+      
+      console.log(points)
       points = points.concat(this.randomPoint())
     }
-    let eye,center,up
+    let eye, center, up
     p = gl.mat4.create()
     gl.mat4.perspective(p, 30, this.data.windowWidth / this.data.windowHeight, 0, 100);
     v = gl.mat4.create()
@@ -51,7 +53,7 @@ Page({
       ctx.setFillStyle("rgba(39,120,123," + ((1 - localPoint[2]) / 2) + ")");
       ctx.setStrokeStyle("#aaa")
       // calculate point size
-      var pSize = (1 - localPoint[2]) * 0.5;
+      var pSize = (1 - localPoint[2]) * 3;
       // calculate screen position by apply pvm matrix to point
       var screenPoint = gl.vec3.create();
       gl.vec3.transformMat4(screenPoint, point, pvm);
