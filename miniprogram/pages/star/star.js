@@ -1,64 +1,36 @@
 // pages/star/star.js
 const gl = require("../../miniprogram_npm/gl-matrix/index.js"),
   ctx = wx.createCanvasContext('stage')
-let m, p, v, eye, center, up, points = [],
-  halfWidth = 150,
-  halfHeight = 250,
-  numOfPoints = 100
+let m,p,v, points = [],
+  numOfPoints = 10000,
+  timer
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    windowHeight: "",
+    windowWidth: ""
   },
   init() {
-
     // create points
     for (let i = 0; i < numOfPoints; i++) {
-      // this.setData({
-      //   points: this.data.points.concat(this.randomPoint())
-      // })
       points = points.concat(this.randomPoint())
     }
-    // // create perspective matrix
-    // this.setData({
-    //   p: gl.mat4.create(),
-    // });
+    let eye,center,up
     p = gl.mat4.create()
-    gl.mat4.perspective(p, 30, halfWidth / halfHeight, 0, 100);
-
-    // // create view matrix
-    // this.setData({
-    //   v: gl.mat4.create(),
-    //   eye: gl.vec3.fromValues(1, 1, -2),
-    //   center: gl.vec3.fromValues(0, 0, 0),
-    //   up: gl.vec3.fromValues(0, 1, 0)
-    // })
+    gl.mat4.perspective(p, 30, this.data.windowWidth / this.data.windowHeight, 0, 100);
     v = gl.mat4.create()
     eye = gl.vec3.fromValues(1, 1, -2)
     center = gl.vec3.fromValues(0, 0, 0)
     up = gl.vec3.fromValues(0, 1, 0)
     gl.mat4.lookAt(v, eye, center, up);
-    console.log(gl.mat4.create())
     // create model matrix
-    // this.setData({
-    //   m: gl.mat4.create(),
-    // })
     m = gl.mat4.create()
   },
-  randomPoint() {
-    var theta = 2 * Math.random() * Math.PI;
-    var phi = 2 * Math.asin(Math.sqrt(Math.random()));
-    return {
-      x: Math.sin(phi) * Math.cos(theta),
-      y: Math.sin(phi) * Math.sin(theta),
-      z: Math.cos(phi)
-    }
-  },
   loop() {
-    console.log("定时绘制")
+    // console.log("定时绘制")
     // create pvm matrix
     var vm = gl.mat4.create();
     gl.mat4.multiply(vm, v, m);
@@ -66,51 +38,73 @@ Page({
     gl.mat4.multiply(pvm, p, vm);
     // rotate sphere by rotate its model matrix
     gl.mat4.rotateY(m, m, Math.PI / 180);
-    // clear screen
-    // ctx.setFillStyle("#FFFFFF");
-    // ctx.rect(0, 0, 2 * halfWidth, 2 * halfHeight);
-    ctx.clearRect(0, 0, 2 * halfWidth, 2 * halfHeight)
+    ctx.clearRect(0, 0, this.data.windowWidth, this.data.windowHeight)
     ctx.save();
-    ctx.translate(halfWidth, halfHeight);
-    // draw center
-    // ctx.setFillStyle("#FF0000")
-    // ctx.rect(0, 0, 5, 5);
-
+    ctx.translate(this.data.windowWidth / 2, this.data.windowHeight / 2);
     // draw points
     for (var i = 0; i < numOfPoints; i++) {
       ctx.beginPath()
       var point = gl.vec3.fromValues(points[i].x, points[i].y, points[i].z);
-
       // calculate color by depth
       var localPoint = gl.vec3.create();
       gl.vec3.transformMat4(localPoint, point, m);
-      ctx.setFillStyle("rgba(0,0,0," + ((1 - localPoint[2]) / 2) + ")");
-
+      ctx.setFillStyle("rgba(39,120,123," + ((1 - localPoint[2]) / 2) + ")");
+      ctx.setStrokeStyle("#aaa")
       // calculate point size
-      var pSize = (1 - localPoint[2]) * 3;
-
+      var pSize = (1 - localPoint[2]) * 0.5;
       // calculate screen position by apply pvm matrix to point
       var screenPoint = gl.vec3.create();
       gl.vec3.transformMat4(screenPoint, point, pvm);
-      console.log(pSize)
       // draw point
-      ctx.arc(screenPoint[0] * halfWidth, screenPoint[1] * halfHeight, pSize, 0, 2 * Math.PI);
-      // ctx.rect(screenPoint[0] * halfWidth, screenPoint[1] * halfHeight, pSize, pSize);
+      ctx.arc(screenPoint[0] * this.data.windowWidth / 2, screenPoint[1] * this.data.windowHeight / 2, pSize, 0, 2 * Math.PI);
       ctx.fill()
+      // ctx.stroke()
     }
     ctx.draw()
 
     ctx.restore();
     let tmp = this.loop
-    setTimeout(() => {
+    timer = setTimeout(() => {
       this.loop()
-    }, 60);
+    }, 500);
+  },
+  randomPoint() {
+    //三维球面上的Marsaglia 方法
+    let u, v, rpow
+    do {
+      u = Math.random() * 2 - 1
+      v = Math.random() * 2 - 1
+      rpow = u * u + v * v
+    } while (rpow > 1)
+    return {
+      x: 2 * u * Math.sqrt(1 - rpow),
+      y: 2 * v * Math.sqrt(1 - rpow),
+      z: 1 - 2 * rpow
+    }
+    //生成两个随机分布的角度，并且按照球坐标的形式产生
+    // var theta = 2 * Math.random() * Math.PI;
+    // // var phi = 2 * Math.asin(Math.sqrt(Math.random()));
+    // var phi = Math.random() * Math.PI
+    // return {
+    //   x: Math.sin(phi) * Math.cos(theta),
+    //   y: Math.sin(phi) * Math.sin(theta),
+    //   z: Math.cos(phi)
+    // }
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    wx.getSystemInfo({
+      success: res => {
+        // 屏幕宽度、高度
+        this.setData({
+          windowHeight:  res.windowHeight,
+          windowWidth: res.windowWidth
+        })
+        this.init()
+      }
+    })
   },
 
   /**
@@ -124,7 +118,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.init()
     this.loop()
   },
 
@@ -132,7 +125,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-
+    clearTimeout(timer)
   },
 
   /**
