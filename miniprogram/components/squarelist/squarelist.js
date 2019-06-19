@@ -43,7 +43,7 @@ Component({
         .collection("soul")
         .where(wherequery)
         .get().then(res => {
-          console.log(res)
+          // console.log(res)
           this.setData({
             list: res.data
           })

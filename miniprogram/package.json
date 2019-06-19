@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "gl-matrix": "^3.0.0",
     "vant-weapp": "^0.5.14"
   }
 }
