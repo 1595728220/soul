@@ -1,7 +1,7 @@
 @import "../../style/stylesheet.wxss";
 /* components/squareitem/squareitem.wxss */
 .square-item{
-  padding:40rpx 20rpx;
+  padding:40rpx 20rpx 10rpx;
   color:#666;
   font-size:24rpx;
   display:flex;

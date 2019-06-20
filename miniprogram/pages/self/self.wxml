@@ -1,2 +1,7 @@
 <!--pages/self/self.wxml-->
-<text>pages/self/self.wxml</text>
+<view class="user">
+  <view class="avatar">
+    <open-data type="userAvatarUrl"></open-data>
+  </view>
+  <open-data type="userNickName" class="user-nick"></open-data>
+</view>

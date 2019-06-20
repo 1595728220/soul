@@ -17,7 +17,7 @@ Page({
     // create points
     for (let i = 0; i < numOfPoints; i++) {
       
-      console.log(points)
+      // console.log(points)
       points = points.concat(this.randomPoint())
     }
     let eye, center, up

@@ -22,7 +22,13 @@ Component({
    */
   methods: {
     loadMsg() {
+      //显示加载中
+      wx.showLoading({
+        title: '加载中',
+      })
+      //创建查询条件的对象
       let wherequery = {}
+      //根据关键词不同添加对应的条件参数
       switch (this.data.listkey) {
         case "关注":
           wherequery = {
@@ -39,17 +45,25 @@ Component({
             tj: true
           }
       }
+      //根据请求参数请求集合soul获取用户的瞬间内容
       db
         .collection("soul")
         .where(wherequery)
         .get().then(res => {
           // console.log(res)
+          //保存查询结果到data的list属性中
           this.setData({
             list: res.data
           })
           // console.log(this.data.list)
+          //加载完成
+          wx.hideLoading()
         })
-        .catch(err => console.log(err))
+        .catch(err =>{
+          console.log(err)
+          //加载完成
+          wx.hideLoading()
+        } )
     }
   },
   /*组件的的生命周期也可以在 lifetimes 字段内进行声明*/
