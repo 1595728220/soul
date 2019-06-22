@@ -1,20 +1,52 @@
 // pages/self/self.js
+const db = wx.cloud.database()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    openId: null
+    openId: null,
+    moment: null
   },
-
+  isMoon(time) {
+    let now = new Date(parseInt(time)).getHours()
+    return now > 18
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-   
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.cloud.callFunction({
+      name: "login"
+    }).then(res => {
+      // console.log(res)
+      this.setData({
+        openId: res.result.openid
+      })
+      this.loadMoment()
+    }).catch(err => console.log(err))
   },
+  loadMoment() {
 
+    db.collection("soul").where({
+      _openid: this.data.openId
+    }).get().then(res => {
+      console.log(res)
+      res.data.forEach(el => {
+        el.isMoon = this.isMoon(el.time)
+
+      })
+      this.setData({
+        moment: res.data
+      })
+      console.log(this.data.moment)
+      wx.hideLoading()
+    }).catch(err => console.log(err))
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

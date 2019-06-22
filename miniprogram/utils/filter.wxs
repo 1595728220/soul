@@ -1,4 +1,4 @@
-var squareitem = {
+var filter = {
   getTime: function(time) {
     var now = getDate().getTime()
     var del = Math.floor((now - time) / 1000)
@@ -6,6 +6,11 @@ var squareitem = {
     else if (del < 60 * 60) return Math.floor(del / 60) + '分钟前'
     else if (del < 60 * 60 * 24) return Math.floor(del / 3600) + '小时前'
     else return Math.floor(del / 3600 / 24) + '天前'
+  },
+  getFullTime: function(time) {
+    console.log(time)
+    var now = getDate(parseInt(time))
+    return now.toLocaleDateString().split("/").join("-") + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds()
   },
   numChange: function(num) {
     if (num < 1000) return num
@@ -19,6 +24,7 @@ var squareitem = {
   }
 }
 module.exports = {
-  getTime: squareitem.getTime,
-  numChange: squareitem.numChange
+  getTime: filter.getTime,
+  numChange: filter.numChange,
+  getFullTime: filter.getFullTime
 };

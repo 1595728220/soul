@@ -1,7 +1,26 @@
 <!--pages/self/self.wxml-->
-<view class="user">
-  <view class="avatar">
-    <open-data type="userAvatarUrl"></open-data>
+<view class="self clear">
+  <view class="user">
+    <view class="avatar">
+      <open-data type="userAvatarUrl"></open-data>
+    </view>
+    <open-data type="userNickName" class="user-nick"></open-data>
   </view>
-  <open-data type="userNickName" class="user-nick"></open-data>
+  <view class="moment clear">
+    <view class="moment-item" wx:for="{{moment}}" wx:key="{{index}}">
+      <view class="moment-time">{{filter.getFullTime(item.time)}}</view>
+      <view class="moment-content">{{item.content}}</view>
+      <view class="moment-img" wx:for="{{item.img}}" wx:key="{{index}}">
+        <view class="img">
+          <image src="{{item}}"></image>
+        </view>
+      </view>
+      <view class="triangle"></view>
+      <image src="../../images/self/sun.png" class="sun" wx:if="{{!item.isMoon}}"></image>
+      <image src="../../images/self/moon.png" class="moon" wx:if="{{item.isMoon}}"></image>
+    </view>
+    <view class="moment-bar"></view>
+  </view>
 </view>
+
+<wxs module="filter" src="../../utils/filter.wxs"></wxs>
