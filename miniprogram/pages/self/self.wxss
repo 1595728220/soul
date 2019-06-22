@@ -1,7 +1,7 @@
 /* pages/self/self.wxss */
 
 .self {
-  background: #ccc;
+  background: #eee;
   padding-bottom: 50rpx;
   min-height:100vh;
 }
@@ -16,7 +16,8 @@
   position: relative;
   height: 400rpx;
   width: 100%;
-  background: #34dbd7;z-index:2;
+  background: #0aa1ed;
+  z-index:2;
 }
 
 .avatar {
