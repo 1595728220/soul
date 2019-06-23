@@ -47,3 +47,23 @@
   font-size:64rpx;
   /* transform: rotate(180deg) */
 }
+.imgList {
+  display: flex;
+  flex-wrap: wrap;
+  width:450rpx;
+}
+
+.imgItem {
+  width: 200rpx;
+  height: 200rpx;
+  border: 1px solid transparent;
+  position: relative;
+  margin-top:10rpx;
+  margin-left:10rpx;
+}
+
+.imgItem image {
+  width: 100%;
+  height: 100%;
+  border-radius: 10rpx;
+}

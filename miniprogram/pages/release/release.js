@@ -32,12 +32,12 @@ Page({
   getImg() {
     if (this.data.tempFilePaths.length >= 5) {
       wx.showModal({
-        title: '最多添加三张图片',
+        title: '最多添加五张图片',
       })
       return
     }
     wx.chooseImage({
-      count: 1,
+      count: 5,
       sizeType: ['original', 'compressed'],
       sourceType: ['album'],
       success: res => {
