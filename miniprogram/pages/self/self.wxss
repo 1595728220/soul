@@ -4,6 +4,7 @@
   background: #eee;
   padding-bottom: 50rpx;
   min-height:100vh;
+  position:relative;
 }
 
 .clear:after {
@@ -57,6 +58,7 @@
   padding: 20rpx;
   float: right;
   margin-right: 30rpx;
+  margin-top:20rpx;
 }
 
 .moment-time {

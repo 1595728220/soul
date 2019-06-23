@@ -1,6 +1,6 @@
 <!--pages/release/release.wxml-->
 <view>
-  <van-field value="{{ message }}" type="textarea" placeholder="记录这一刻，晒给懂你的人......" autosize border="{{ false }}" focus="{{ true }}" clearable="{{true}}" bind:focus="showControl" bind:blur="hiddenControl" />
+  <van-field value="{{ message }}" type="textarea" placeholder="记录这一刻，晒给懂你的人......" autosize border="{{ false }}" focus="{{ true }}" clearable="{{true}}"  />
 </view>
 <view class="imgList">
   <view class="imgItem" wx:for="{{tempFilePaths}}" wx:key="{{index}}">

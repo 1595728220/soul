@@ -6,8 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    message: "",
-    controlHidden: true,
+    message: "111",
+    controlHidden: false,
     tempFilePaths: [],
     fileID:[]
   },
@@ -43,7 +43,7 @@ Page({
       success: res => {
         // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = this.data.tempFilePaths.concat(res.tempFilePaths)
-        console.log(tempFilePaths)
+        // console.log(tempFilePaths)
         this.setData({
           tempFilePaths
         })
@@ -76,9 +76,9 @@ Page({
       title: '上传中',
     })
     let imgUrl = this.data.tempFilePaths
-    imgUrl.forEach(el => {
+    imgUrl = imgUrl.map(el => {
       let suffix = el.match(/.\w+$/)[0]
-      el = new Promise((resolve) => {
+      return new Promise((resolve) => {
         console.log("上传图片")
         wx.cloud.uploadFile({
           cloudPath: `${new Date().getTime()}${parseInt(Math.random() * 1000)}${suffix}`,
@@ -95,7 +95,10 @@ Page({
         })
       })
     })
+    
     Promise.all(imgUrl).then(()=>{
+      console.log(this.data.message)
+      console.log(this.data.fileID)
       db.collection("soul").add({
         data:{
           avatar: getApp().globalData.userInfo.avatarUrl,
@@ -108,12 +111,23 @@ Page({
           tj:true,
           xihuan:false,
           xihuancount:0,
-          zx:true
+          zx:true,
+          img:this.data.fileID
         }
       }).then(res=>{
         wx.hideLoading()
         wx.showToast({
           title: '发布成功',
+        })
+        this.setData({
+          message:"",
+          tempFilePaths:[],
+          fileID:[]
+        })
+      }).catch(err=>{
+        wx.hideLoading()
+        wx.showToast({
+          title: '发布失败',
         })
       })
     })
