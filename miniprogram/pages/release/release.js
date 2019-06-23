@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    message: "111",
+    message: "",
     controlHidden: false,
     tempFilePaths: [],
     fileID:[]
