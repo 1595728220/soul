@@ -10,6 +10,7 @@
 .square-img{
   width:64rpx;
   height:64rpx;
+  border-radius: 50%;
 }
 .square-detail{
   flex-grow: 1;

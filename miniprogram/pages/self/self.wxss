@@ -25,6 +25,7 @@
   width: 180rpx;
   height: 180rpx;
   border-radius: 50%;
+  border:5rpx solid #fff;
   position: absolute;
   left: 50%;
   top: 50%;

@@ -1,2 +1,18 @@
 <!--pages/release/release.wxml-->
-<text>pages/release/release.wxml</text>
+<view>
+  <van-field value="{{ message }}" type="textarea" placeholder="记录这一刻，晒给懂你的人......" autosize border="{{ false }}" focus="{{ true }}" clearable="{{true}}" bind:focus="showControl" bind:blur="hiddenControl" />
+</view>
+<view class="imgList">
+  <view class="imgItem" wx:for="{{tempFilePaths}}" wx:key="{{index}}">
+    <view class="cancel" bindtap="remove" data-index="{{index}}">x</view>
+    <image src="{{item}}"></image>
+  </view>
+  <view class="imgItem add" bindtap="getImg">+</view>
+</view>
+<view class="control" hidden="{{controlHidden}}">
+  <view class="icon">
+    <view class="iconfont icon-tupian" bindtap="getImg"></view>
+    <view class="iconfont icon-xiangji" bindtap="getCamero"></view>
+  </view>
+  <van-button type="primary" bindtap="upload" >发布</van-button>
+</view>

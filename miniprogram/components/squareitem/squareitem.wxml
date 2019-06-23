@@ -1,6 +1,6 @@
 <!--components/squareitem/squareitem.wxml-->
 <view class="square-item">
-  <image src="../../images/tabbar/{{item.avatar}}" class="square-img"></image>
+  <image src="{{item.avatar}}" class="square-img"></image>
   <view class="square-detail">
     <view class="square-nick">{{item.nick}}</view>
     <view class="square-time">{{squareitem.getTime(item.time)}}</view>

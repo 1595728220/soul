@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/square/square",
     "pages/star/star",
     "pages/release/release",
@@ -18,8 +19,9 @@
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
     "van-button": "vant-weapp/button/index",
-    "van-tabs":"vant-weapp/tabs/index",
-    "van-tab":"vant-weapp/tab/index"
+    "van-tabs": "vant-weapp/tabs/index",
+    "van-tab": "vant-weapp/tab/index",
+    "van-field": "vant-weapp/field/index"
   },
   "tabBar": {
     "color": "#333",

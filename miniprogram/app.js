@@ -11,7 +11,8 @@ App({
     }
 
     this.globalData = {
-      openId: null
+      openId: null,
+      userInfo:null
     }
     wx.cloud.callFunction({
       name: "login"

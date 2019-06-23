@@ -28,6 +28,7 @@ Component({
       })
       //创建查询条件的对象
       let wherequery = {}
+      // console.log(this.data.listkey)
       //根据关键词不同添加对应的条件参数
       switch (this.data.listkey) {
         case "关注":
@@ -51,6 +52,7 @@ Component({
         .where(wherequery)
         .get().then(res => {
           // console.log(res)
+          // console.log(wherequery)
           //保存查询结果到data的list属性中
           this.setData({
             list: res.data
@@ -68,7 +70,7 @@ Component({
   },
   /*组件的的生命周期也可以在 lifetimes 字段内进行声明*/
   lifetimes: {
-    created: function() {
+    attached: function() {
       //在组件实例刚刚被创建时执行
       this.loadMsg()
     },
