@@ -2,18 +2,19 @@
 	"miniprogramRoot": "miniprogram/",
 	"cloudfunctionRoot": "cloudfunctions/",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
 		"nodeModules": true,
 		"autoAudits": false,
+		"uglifyFileName": false,
 		"checkInvalidKey": true
 	},
 	"appid": "wx832aadcdaf07f2a0",
 	"projectname": "wx",
-	"libVersion": "2.2.5",
+	"libVersion": "2.7.2",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
@@ -57,7 +58,7 @@
 				},
 				{
 					"id": -1,
-					"name": "re'lease",
+					"name": "release",
 					"pathName": "pages/release/release",
 					"scene": null
 				}

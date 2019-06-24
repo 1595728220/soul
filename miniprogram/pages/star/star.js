@@ -91,7 +91,7 @@ Page({
       ctx.fill()
       //draw text
       ctx.setFontSize(12)
-      ctx.fillText(points[i].nick, screenPoint[0] * this.data.windowWidth / 2 - 3 * points[i].nick.length, screenPoint[1] * this.data.windowHeight / 2 - 10, 40)
+      ctx.fillText(points[i].nick, screenPoint[0] * this.data.windowWidth / 2 - 3 * points[i].nick.length, screenPoint[1] * this.data.windowHeight / 2 - 10,100)
       // ctx.stroke()
     }
     ctx.draw()
