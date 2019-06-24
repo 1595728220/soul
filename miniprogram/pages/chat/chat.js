@@ -17,7 +17,15 @@ Page({
     wx.onSocketOpen(res => {
       socketOpen = true
       sendSocketMessage("走我")
+      console.log(res)
     })
+    function sendSocketMessage(msg) {
+      if (socketOpen) {
+        wx.sendSocketMessage({
+          data: msg
+        })
+      } 
+    }
   },
   /**
    * 生命周期函数--监听页面加载
