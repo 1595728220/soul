@@ -30,7 +30,7 @@ Page({
   },
   //成功登陆后执行的方法
   successLogin(res) {
-    console.log(res)
+    // console.log(res)
     wx.showLoading({
       title: '正在登陆中',
     })
@@ -46,7 +46,7 @@ Page({
     db.collection("soul_user").where({
       _openid
     }).get().then(res => {
-      console.log(res)
+      // console.log(res)
       if (res.data.length === 0) {
         console.log("添加新用户信息")
         db.collection("soul_user").add({
@@ -85,7 +85,8 @@ Page({
     })
   },
   bindGetUserInfo: function(res) {
-    this.successLogin(res)
+    // console.log(res)
+    this.successLogin(res.detail)
   },
 
   /**

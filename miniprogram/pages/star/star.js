@@ -1,13 +1,8 @@
 // pages/star/star.js
-const gl = require("../../miniprogram_npm/gl-matrix/index.js"),
-  ctx = wx.createCanvasContext('stage')
-let m, p, v, points = [{
-    name: "嘻嘻"
-  }, {
-    name: "哈哈"
-  }],
-  numOfPoints = points.length,
-  timer
+const gl = require("../../miniprogram_npm/gl-matrix/index.js")
+let m, p, v, points = []
+
+
 Page({
 
   /**
@@ -15,30 +10,53 @@ Page({
    */
   data: {
     windowHeight: "",
-    windowWidth: ""
+    windowWidth: "",
+    initFinish: false,
+    numOfPoints: 0,
+    timer: null
   },
   init() {
-    // create points
-    for (let i = 0; i < numOfPoints; i++) {
-      let tmpObj = this.randomPoint()
-      // console.log(points)
-      Object.assign(points[i], tmpObj)
-      console.log(points[i])
-      points = points.concat(this.randomPoint())
-    }
-    let eye, center, up
-    p = gl.mat4.create()
-    gl.mat4.perspective(p, 30, this.data.windowWidth / this.data.windowHeight, 0, 100);
-    v = gl.mat4.create()
-    eye = gl.vec3.fromValues(1, 1, -2)
-    center = gl.vec3.fromValues(0, 0, 0)
-    up = gl.vec3.fromValues(0, 1, 0)
-    gl.mat4.lookAt(v, eye, center, up);
-    // create model matrix
-    m = gl.mat4.create()
+    return new Promise(resolve => {
+      console.log("获取所有用户列表")
+      wx.cloud.database().collection("soul_user").get().then(res => {
+        console.log(res.data)
+        points = res.data
+        this.setData({
+          numOfPoints: points.length
+        })
+        // create points
+        for (let i = 0; i < this.data.numOfPoints; i++) {
+          let tmpObj = this.randomPoint()
+          // console.log(points)
+          Object.assign(points[i], tmpObj)
+          points = points.concat(this.randomPoint())
+        }
+
+        let eye, center, up
+        this.setData({
+          ctx: wx.createCanvasContext('stage')
+        })
+        p = gl.mat4.create()
+        gl.mat4.perspective(p, 30, this.data.windowWidth / this.data.windowHeight, 0, 100);
+        v = gl.mat4.create()
+        eye = gl.vec3.fromValues(1, 1, -2)
+        center = gl.vec3.fromValues(0, 0, 0)
+        up = gl.vec3.fromValues(0, 1, 0)
+        gl.mat4.lookAt(v, eye, center, up);
+        // create model matrix
+        m = gl.mat4.create()
+        this.setData({
+          initFinish: true
+        })
+        console.log("数据初始化完成")
+        resolve()
+      }).catch(err => console.log(err))
+    })
+
   },
   loop() {
     // console.log("定时绘制")
+    let ctx = this.data.ctx
     // create pvm matrix
     var vm = gl.mat4.create();
     gl.mat4.multiply(vm, v, m);
@@ -55,7 +73,7 @@ Page({
     ctx.arc(0, 0, 5, 0, 2 * Math.PI)
     ctx.fill()
     // draw points
-    for (var i = 0; i < numOfPoints; i++) {
+    for (var i = 0; i < this.data.numOfPoints; i++) {
       ctx.beginPath()
       var point = gl.vec3.fromValues(points[i].x, points[i].y, points[i].z);
       // calculate color by depth
@@ -73,16 +91,18 @@ Page({
       ctx.fill()
       //draw text
       ctx.setFontSize(12)
-      ctx.fillText(points[i].name, screenPoint[0] * this.data.windowWidth / 2 - 6 * points[i].name.length, screenPoint[1] * this.data.windowHeight / 2 - 10, 40)
+      ctx.fillText(points[i].nick, screenPoint[0] * this.data.windowWidth / 2 - 3 * points[i].nick.length, screenPoint[1] * this.data.windowHeight / 2 - 10, 40)
       // ctx.stroke()
     }
     ctx.draw()
 
     ctx.restore();
-    let tmp = this.loop
-    timer = setTimeout(() => {
+    let timer = setTimeout(() => {
       this.loop()
-    }, 200);
+    }, 60);
+    this.setData({
+      timer
+    })
   },
   randomPoint() {
     //三维球面上的Marsaglia 方法
@@ -118,7 +138,7 @@ Page({
           windowHeight:  res.windowHeight,
           windowWidth: res.windowWidth
         })
-        this.init()
+        this.init().then(this.loop)
       }
     })
   },
@@ -134,14 +154,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.loop()
+    if (this.data.initFinish) {
+      console.log("开始绘制")
+      this.loop()
+
+    }
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-    clearTimeout(timer)
+    console.log("结束绘制")
+    clearTimeout(this.data.timer)
   },
 
   /**
