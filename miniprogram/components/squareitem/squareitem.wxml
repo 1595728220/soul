@@ -5,7 +5,7 @@
     <view class="square-nick">{{item.nick}}</view>
     <view class="square-time">{{squareitem.getTime(item.time)}}</view>
     <view class="imgList" >
-      <view class="imgItem" wx:for="{{item.img}}" :key="{{index}}">
+      <view class="imgItem" wx:for="{{item.img}}" wx:key="{{index}}">
         <image src="{{item}}"></image>
       </view>
      </view>

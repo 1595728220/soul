@@ -1,8 +1,12 @@
 // pages/star/star.js
 const gl = require("../../miniprogram_npm/gl-matrix/index.js"),
   ctx = wx.createCanvasContext('stage')
-let m, p, v, points = [],
-  numOfPoints = 30,
+let m, p, v, points = [{
+    name: "嘻嘻"
+  }, {
+    name: "哈哈"
+  }],
+  numOfPoints = points.length,
   timer
 Page({
 
@@ -16,8 +20,10 @@ Page({
   init() {
     // create points
     for (let i = 0; i < numOfPoints; i++) {
-      
+      let tmpObj = this.randomPoint()
       // console.log(points)
+      Object.assign(points[i], tmpObj)
+      console.log(points[i])
       points = points.concat(this.randomPoint())
     }
     let eye, center, up
@@ -43,6 +49,11 @@ Page({
     ctx.clearRect(0, 0, this.data.windowWidth, this.data.windowHeight)
     ctx.save();
     ctx.translate(this.data.windowWidth / 2, this.data.windowHeight / 2);
+    // draw center 
+    ctx.beginPath()
+    ctx.setFillStyle("#1f1f1f");
+    ctx.arc(0, 0, 5, 0, 2 * Math.PI)
+    ctx.fill()
     // draw points
     for (var i = 0; i < numOfPoints; i++) {
       ctx.beginPath()
@@ -60,6 +71,9 @@ Page({
       // draw point
       ctx.arc(screenPoint[0] * this.data.windowWidth / 2, screenPoint[1] * this.data.windowHeight / 2, pSize, 0, 2 * Math.PI);
       ctx.fill()
+      //draw text
+      ctx.setFontSize(12)
+      ctx.fillText(points[i].name, screenPoint[0] * this.data.windowWidth / 2 - 6 * points[i].name.length, screenPoint[1] * this.data.windowHeight / 2 - 10, 40)
       // ctx.stroke()
     }
     ctx.draw()
@@ -68,7 +82,7 @@ Page({
     let tmp = this.loop
     timer = setTimeout(() => {
       this.loop()
-    }, 500);
+    }, 200);
   },
   randomPoint() {
     //三维球面上的Marsaglia 方法
