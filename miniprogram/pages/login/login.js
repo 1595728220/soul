@@ -1,4 +1,5 @@
 // miniprogram/pages/login/login.js
+const db = wx.cloud.database()
 Page({
 
   /**
@@ -10,28 +11,81 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function() {
     // 查看是否授权
     wx.getSetting({
-      success: function (res) {
+      success: res => {
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称
           wx.getUserInfo({
-            success: function (res) {
+            success: res => {
               // console.log(getApp().globalData)
               // console.log(res)
-              getApp().globalData.userInfo = res.userInfo
-              wx.switchTab({url:"/pages/square/square"})
+              this.successLogin(res)
             }
           })
         }
       }
     })
   },
-  bindGetUserInfo: function (e) {
-    console.log(e.detail.userInfo)
-    getApp().globalData.userInfo = e.detail.userInfo
-    wx.switchTab({ url: "/pages/square/square" })
+  //成功登陆后执行的方法
+  successLogin(res) {
+    console.log(res)
+    wx.showLoading({
+      title: '正在登陆中',
+    })
+    getApp().globalData.userInfo = res.userInfo
+    let {
+      nickName: nick,
+      avatarUrl: avatar
+    } = getApp().globalData.userInfo
+    let {
+      openId: _openid
+    } = getApp().globalData
+    console.log()
+    db.collection("soul_user").where({
+      _openid
+    }).get().then(res => {
+      console.log(res)
+      if (res.data.length === 0) {
+        console.log("添加新用户信息")
+        db.collection("soul_user").add({
+          data: {
+            nick,
+            avatar
+          }
+        }).then(res => {
+          console.log("添加新用户成功")
+          wx.hideLoading()
+          wx.showToast({
+            title: '登陆成功',
+          })
+          wx.switchTab({
+            url: "/pages/square/square"
+          })
+
+        })
+      } else {
+        console.log("更新当前用户信息")
+        db.collection("soul_user").doc(res.data[0]._id).update({
+          data: {
+            nick,
+            avatar
+          }
+        }).then(res => {
+          console.log("更新当前用户信息成功")
+          wx.hideLoading()
+          wx.switchTab({
+            url: "/pages/square/square"
+          })
+        })
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  },
+  bindGetUserInfo: function(res) {
+    this.successLogin(res)
   },
 
   /**
