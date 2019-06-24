@@ -6,25 +6,29 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    scoketOpen: false
   },
   connectChat() {
-    let socketOpen = false
+
     const socketMsgQueue = []
     wx.connectSocket({
       url: 'ws://127.0.0.1:8181'
     })
     wx.onSocketOpen(res => {
-      socketOpen = true
-      sendSocketMessage("走我")
+      this.setData({
+        socketOpen: true
+      })
+      // sendSocketMessage("走我")
       console.log(res)
     })
+    wx.onSocketMessage(res => console.log(res))
+
     function sendSocketMessage(msg) {
-      if (socketOpen) {
+      if (this.data.socketOpen) {
         wx.sendSocketMessage({
           data: msg
         })
-      } 
+      }
     }
   },
   /**
@@ -52,7 +56,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-
+    
   },
 
   /**
