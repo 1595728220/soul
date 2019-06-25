@@ -7,7 +7,10 @@
     "pages/chat/chat",
     "pages/self/self",
     "pages/share/share",
-    "pages/comment/comment"
+    "pages/comment/comment",
+    "pages/p2pchat/p2pchat",
+    "pages/otherSelf/otherSelf"
+
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

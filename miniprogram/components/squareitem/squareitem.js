@@ -16,11 +16,15 @@ Component({
   data: {
 
   },
-
   /**
    * 组件的方法列表
    */
   methods: {
+    toOtherSelf() {
+      wx.navigateTo({
+        url: '/pages/otherSelf/otherSelf?_openid=' + this.data.item._openid,
+      })
+    },
     changeXiHuan(e) {
       let {
         xihuan,

@@ -1,4 +1,4 @@
 <!--components/squarebanner/squarebanner.wxml-->
 <view>
-  <square-item item="{{item}}" wx:for="{{list}}" wx:key="{{index}}" bind:myEvent="loadMsg"></square-item>
+  <square-item item="{{item}}" wx:for="{{list}}" wx:key="{{index}}" bind:myEvent="loadMsg" ></square-item>
 </view>

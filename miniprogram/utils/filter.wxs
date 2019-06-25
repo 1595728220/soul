@@ -8,7 +8,7 @@ var filter = {
     else return Math.floor(del / 3600 / 24) + '天前'
   },
   getFullTime: function(time) {
-    console.log(time)
+    // console.log(time)
     var now = getDate(parseInt(time))
     return now.toLocaleDateString().split("/").join("-") + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds()
   },

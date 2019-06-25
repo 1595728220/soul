@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    scoketOpen: false
+    scoketOpen: false,
+    msgList:[] //对象数组，对象保存用户id和最近的消息
   },
   connectChat() {
 
