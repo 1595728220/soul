@@ -8,7 +8,10 @@ Page({
   data: {
     _openid: null,
     moment: null,
-    user: null
+    user: null,
+    guanzhu: [],
+    _id: null,
+    guanzhuState: false
   },
   isMoon(time) {
     let now = new Date(parseInt(time)).getHours()
@@ -18,10 +21,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(options)
+    // console.log(options)
     this.setData({
       _openid: options._openid
     })
+    this.loadUser()
+  },
+  loadUser() {
     wx.showLoading({
       title: '加载中',
     })
@@ -34,27 +40,70 @@ Page({
         user
       })
       this.loadMoment()
+      this.getGuanzhu()
     }).catch(err => console.log(err))
   },
   loadMoment() {
     db.collection("soul").where({
       _openid: this.data._openid
     }).get().then(res => {
-      console.log(res)
+      // console.log(res)
       res.data.forEach(el => {
         el.isMoon = this.isMoon(el.time)
       })
       this.setData({
         moment: res.data
       })
-      console.log(this.data.moment)
+      // console.log(this.data.moment)
       wx.hideLoading()
     }).catch(err => console.log(err))
   },
-  toP2pChat(){
+  toP2pChat() {
     wx.navigateTo({
-      url: '/pages/p2pchat/p2pchat?_openid='+this.data._openid,
+      url: '/pages/p2pchat/p2pchat?_openid=' + this.data._openid,
     })
+  },
+  //获取关注列表
+  getGuanzhu() {
+    // console.log(getApp().globalData.openId)
+    db.collection("soul_user").where({
+      _openid: getApp().globalData.openId
+    }).get().then(res => {
+      //  console.log(res)
+      let guanzhu = res.data[0].guanzhu,
+        guanzhuState 
+      guanzhuState = guanzhu.indexOf(this.data._openid) !== -1
+      this.setData({
+        guanzhu,
+        _id: res.data[0]._id,
+        guanzhuState
+      })
+    }).catch(err => console.log(err))
+  },
+  guanzhu() {
+    let guanzhu = this.data.guanzhu
+    guanzhu.push(this.data._openid)
+    db.collection("soul_user").doc(this.data._id).update({
+      data: {
+        guanzhu
+      }
+    }).then(res => {
+      console.log(res)
+      this.getGuanzhu()
+    }).catch(err => console.log(err))
+  },
+  cancelguanzhu() {
+    let guanzhu = this.data.guanzhu,
+      index = guanzhu.indexOf(this.data._openid)
+    guanzhu.splice(index, 1)
+    db.collection("soul_user").doc(this.data._id).update({
+      data: {
+        guanzhu
+      }
+    }).then(res => {
+      console.log(res)
+      this.getGuanzhu()
+    }).catch(err => console.log(err))
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

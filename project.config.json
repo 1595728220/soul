@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -60,6 +60,14 @@
 					"id": -1,
 					"name": "release",
 					"pathName": "pages/release/release",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "otherself",
+					"pathName": "pages/otherSelf/otherSelf",
+					"query": "_openid=otcZZ5GiW9ldjjfSbNx53XJrSFvQ",
 					"scene": null
 				}
 			]

@@ -116,9 +116,13 @@
   width: 100%;
   height: 100%;
 }
-.siliao{
+.bottom-button{
+  width:100%;
+  display:flex;
+  justify-content: center;
   position:fixed;
   bottom:20rpx;
-  right:20rpx;
-  
+}
+.bottom-button>view:first-child{
+  margin-right:40rpx;
 }

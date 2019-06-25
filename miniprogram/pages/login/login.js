@@ -52,7 +52,8 @@ Page({
         db.collection("soul_user").add({
           data: {
             nick,
-            avatar
+            avatar,
+            guanzhu:[]
           }
         }).then(res => {
           console.log("添加新用户成功")

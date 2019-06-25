@@ -31,7 +31,6 @@ Page({
     }).catch(err => console.log(err))
   },
   loadMoment() {
-
     db.collection("soul").where({
       _openid: this.data.openId
     }).get().then(res => {

@@ -22,6 +22,19 @@
     <view class="moment-bar"></view>
   </view>
 </view>
-<van-button type="primary" round class="siliao" size="small" bindtap="toP2pChat">私聊</van-button>
+<view class="bottom-button">
+  <view>
+    <view wx:if="{{ guanzhuState }}">
+      <van-button type="default" round size="small" bindtap="cancelguanzhu">取消关注</van-button>
+    </view>
+    <view  wx:else >
+      <van-button type="primary" round size="small" bindtap="guanzhu">关注</van-button>
+    </view>
+  </view>
+  <view>
+    <van-button type="primary" round size="small" bindtap="toP2pChat">私聊</van-button>
+  </view>
+
+</view>
 
 <wxs module="filter" src="../../utils/filter.wxs"></wxs>
