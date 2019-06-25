@@ -40,8 +40,7 @@ Component({
           count
         }
       }).then(res => {
-        res.result.stats.updated !== 0
-      this.triggerEvent('myEvent')
+        res.result.stats.updated !== 0 && this.triggerEvent('myEvent')
       }).catch(err => console.log(err))
       
     },

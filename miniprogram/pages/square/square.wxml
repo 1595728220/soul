@@ -1,12 +1,12 @@
 <!--pages/square/square.wxml-->
-<van-tabs sticky>
-  <van-tab title="关注">
-    <square-list listkey="关注"></square-list>
+<van-tabs sticky bind:change="showComponet">
+  <van-tab title="关注" >
+    <square-list  listkey="关注" wx:if="{{showIndex === 0}}" ></square-list>
   </van-tab>
-  <van-tab title="推荐">
-    <square-list listkey="推荐"></square-list>
+  <van-tab title="推荐"  >
+    <square-list listkey="推荐" wx:if="{{showIndex === 1}}" ></square-list>
   </van-tab>
-  <van-tab title="最新">
-    <square-list listkey="最新"></square-list>
+  <van-tab title="最新" >
+    <square-list listkey="最新" wx:if="{{showIndex === 2}}" ></square-list>
   </van-tab>
 </van-tabs>
