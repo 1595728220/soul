@@ -8,16 +8,13 @@ exports.main = async(event, context) => {
   const wxContext = cloud.getWXContext()
   let {
     xihuan,
-    _id,
-    count
+    _id
   } = event
-  xihuan ? count-- : count++
     // console.log(xihuan, id, count)
     try {
       return await db.collection("soul").doc(_id).update({
         data: {
-          xihuan: !xihuan,
-          xihuancount: count
+          xihuan
         }
       })
     } catch (err) { console.log(err)}

@@ -14,8 +14,8 @@
     <view class="square-content">{{item.content}}</view>
 
     <view class="bottom-button">
-      <view class="iconfont {{item.xihuan?'icon-xihuan':'icon-xihuan-xianxing'}}" bindtap="changeXiHuan" data-xihuan="{{item.xihuan}}" data-id="{{item._id}}" data-count="{{item.xihuancount}}">
-        <text>{{squareitem.numChange(item.xihuancount)}}</text>
+      <view class="iconfont {{xihuan[0].value?'icon-xihuan':'icon-xihuan-xianxing'}}" bindtap="changeXiHuan">
+        <text>{{squareitem.numChange(count)}}</text>
       </view>
       <view class="iconfont icon-xiaoxi" bindtap="pinglun">
         <text>{{squareitem.numChange(item.msgcount)}}</text>
