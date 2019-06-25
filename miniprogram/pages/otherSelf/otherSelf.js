@@ -1,5 +1,8 @@
 // pages/otherSelf/otherSelf.js
 const db = wx.cloud.database()
+wx.cloud.init({
+  env: 'web-test-01-eshmo'
+})
 Page({
 
   /**
@@ -11,7 +14,8 @@ Page({
     user: null,
     guanzhu: [],
     _id: null,
-    guanzhuState: false
+    guanzhuState: false,
+    controlId:null
   },
   isMoon(time) {
     let now = new Date(parseInt(time)).getHours()
@@ -22,8 +26,10 @@ Page({
    */
   onLoad: function(options) {
     // console.log(options)
+
     this.setData({
-      _openid: options._openid
+      _openid: options._openid,
+      controlId:getApp().globalData.openId
     })
     this.loadUser()
   },
@@ -67,7 +73,7 @@ Page({
   getGuanzhu() {
     // console.log(getApp().globalData.openId)
     db.collection("soul_user").where({
-      _openid: getApp().globalData.openId
+      _openid: this.data.controlId
     }).get().then(res => {
       //  console.log(res)
       let guanzhu = res.data[0].guanzhu,
@@ -90,6 +96,8 @@ Page({
     }).then(res => {
       console.log(res)
       this.getGuanzhu()
+      this.updategz(true)
+
     }).catch(err => console.log(err))
   },
   cancelguanzhu() {
@@ -103,7 +111,18 @@ Page({
     }).then(res => {
       console.log(res)
       this.getGuanzhu()
+      this.updategz(false)
     }).catch(err => console.log(err))
+  },
+  updategz(gz){
+    let _openid = this.data._openid
+    wx.cloud.callFunction({
+      name:"changegz",
+      data:{
+        gz,
+        _openid
+      }
+    }).then(res=>console.log(res)).catch(err=>console.log(err))
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

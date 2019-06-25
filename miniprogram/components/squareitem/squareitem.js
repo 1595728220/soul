@@ -25,28 +25,25 @@ Component({
         url: '/pages/otherSelf/otherSelf?_openid=' + this.data.item._openid,
       })
     },
-    changeXiHuan(e) {
+    changeXiHuan() {
+      // console.log(this.data.item)
       let {
         xihuan,
-        _id: id,
+        _id: _id,
         xihuancount: count
       } = this.data.item
-
-      xihuan ? count-- : count++
-        // console.log(xihuan, id, count)
-
-        db.collection("soul").doc(id).update({
-          data: {
-            xihuan: !xihuan,
-            xihuancount: count
-          }
-        }).then(res => {
-          console.log(res)
-          if (res.stats.updated !== 0) {
-            // console.log(111)
-            this.triggerEvent('myEvent')
-          }
-        }).catch(err => console.log(err))
+      wx.cloud.callFunction({
+        name:"changexihuan",
+        data:{
+          xihuan,
+          _id,
+          count
+        }
+      }).then(res => {
+        res.result.stats.updated !== 0
+      this.triggerEvent('myEvent')
+      }).catch(err => console.log(err))
+      
     },
     pinglun() {
       console.log("去评论")

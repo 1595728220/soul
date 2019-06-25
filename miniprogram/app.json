@@ -18,6 +18,7 @@
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "soul",
     "navigationBarTextStyle": "black"
+    
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {

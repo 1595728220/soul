@@ -22,12 +22,12 @@
     <view class="moment-bar"></view>
   </view>
 </view>
-<view class="bottom-button">
+<view class="bottom-button" wx:if="{{controlId !== _openid}}">
   <view>
-    <view wx:if="{{ guanzhuState }}">
+    <view hidden="{{ !guanzhuState }}">
       <van-button type="default" round size="small" bindtap="cancelguanzhu">取消关注</van-button>
     </view>
-    <view  wx:else >
+    <view  hidden="{{guanzhuState}}" >
       <van-button type="primary" round size="small" bindtap="guanzhu">关注</van-button>
     </view>
   </view>

@@ -1,5 +1,6 @@
 {
   "usingComponents": {
     "square-list": "../../components/squarelist/squarelist"
-  }
+  },
+  "enablePullDownRefresh": true
 }
