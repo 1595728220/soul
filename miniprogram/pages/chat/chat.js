@@ -7,10 +7,16 @@ Page({
    */
   data: {
     scoketOpen: false,
-    msgList:[] //对象数组，对象保存用户id和最近的消息
+    msgList:[], //对象数组，对象保存用户id和最近的消息,
+    inputMsg:"",
+  },
+  onChange(val){
+    console.log(val)
+    this.setData({
+      inputMsg:val
+    })
   },
   connectChat() {
-
     const socketMsgQueue = []
     wx.connectSocket({
       url: 'ws://127.0.0.1:8181'
@@ -22,7 +28,9 @@ Page({
       // sendSocketMessage("走我")
       console.log(res)
     })
-    wx.onSocketMessage(res => console.log(res))
+    wx.onSocketMessage(res => {
+      console.log(res)
+    })
 
     function sendSocketMessage(msg) {
       if (this.data.socketOpen) {

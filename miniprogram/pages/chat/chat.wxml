@@ -1,2 +1,8 @@
 <!--pages/chat/chat.wxml-->
-<text>pages/chat/chat.wxml</text>
+ <van-field
+    value="{{ inputMsg }}"
+    placeholder="请输入要发送的内容"
+    bind:change="onChange"
+  />
+<button bindtap="sendSocketMessage">发送消息</button>
+

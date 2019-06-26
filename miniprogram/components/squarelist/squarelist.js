@@ -40,6 +40,7 @@ Component({
         switch (this.data.listkey) {
           case "关注":
             wherequery = {
+              //查询瞬间的发布者为在浏览者的关注列表中的
               _openid: _.in(guanzhu)
             }
             break;
