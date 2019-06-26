@@ -46,7 +46,7 @@ Page({
     db.collection("soul_user").where({
       _openid
     }).get().then(res => {
-      // console.log(res)
+      console.log(res)
       if (res.data.length === 0) {
         console.log("添加新用户信息")
         db.collection("soul_user").add({
@@ -81,8 +81,13 @@ Page({
           })
         })
       }
+      //如果错误添加已有的用户，删除后添加的用户记录
+      if(res.data.length > 1){
+        db.collection("soul_user").doc(res.data[1]._id).remove()
+      }
     }).catch(err => {
       console.log(err)
+      wx.hideLoading()
     })
   },
   bindGetUserInfo: function(res) {

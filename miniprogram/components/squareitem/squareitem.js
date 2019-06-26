@@ -74,14 +74,6 @@ Component({
       })
       console.log(xihuan)
 
-      this.setData({
-        xihuan: xihuan.filter(el=>{
-          return el._openid === getApp().globalData.openId
-        }),
-        count: xihuan.filter(el => {
-          return el.value
-        }).length
-      })
       // console.log(xihuan)
       wx.cloud.callFunction({
         name: "changexihuan",
@@ -91,6 +83,14 @@ Component({
         }
       }).then(res => {
         res.result.stats.updated !== 0 && this.triggerEvent('myEvent')
+        this.setData({
+          xihuan: xihuan.filter(el => {
+            return el._openid === getApp().globalData.openId
+          }),
+          count: xihuan.filter(el => {
+            return el.value
+          }).length
+        })
       }).catch(err => console.log(err))
 
     },
