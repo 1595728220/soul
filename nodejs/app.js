@@ -16,12 +16,14 @@ wss.on('connection', function(ws) {
       recive_openid,
       msg,
       own_avatar,
-      recive_avatar
+      recive_avatar,
+      own_nick,
+      recive_nick
     } = message
 
     let now = new Date().getTime()
-    let sql = "insert into chat values(null,?,?,?,?,?,?)"
-    pool.query(sql, [own_openid, recive_openid, msg, now, own_avatar, recive_avatar], (err, result) => {
+    let sql = "insert into chat values(null,?,?,?,?,?,?,?,?)"
+    pool.query(sql, [own_openid, recive_openid, msg, now, own_avatar, recive_avatar, own_nick,recive_nick], (err, result) => {
       if (err) throw err
       console.log(result)
       console.log(ws.send)
@@ -36,7 +38,9 @@ wss.on('connection', function(ws) {
             msg,
             now,
             own_avatar,
-            recive_avatar
+            recive_avatar,
+            own_nick,
+            recive_nick
           }
         }
         tmp = JSON.stringify(tmp)
@@ -59,7 +63,6 @@ wss.on('connection', function(ws) {
     tmp = JSON.stringify(tmp)
     ws.send(tmp)
   })
-
 })
 
 app.listen(3000, function() {

@@ -14,11 +14,14 @@ Page({
       recive_openid: "",
       msg: "",
       own_avatar: "",
-      recive_avatar: ""
+      recive_avatar: "",
+      own_nick:"",
+      recive_nick:""
     },
     own_list: [],
     recive_list: []
   },
+  //用户输入消息时,将消息保存到消息对象中
   onChange(val) {
     this.setData({
       ["msgObj.msg"]: val.detail,
@@ -41,7 +44,7 @@ Page({
   // 创建连接
   connectChat() {
     SocketTask = wx.connectSocket({
-      url: 'ws://127.0.0.1:8181',
+      url: 'wss://soul.urlip.cn:8181',
       success(res) {
         console.log("连接成功")
       },
@@ -60,22 +63,28 @@ Page({
       recive_openid =
       // "otcZZ5GiW9ldjjfSbNx53XJrSFvQ"
     options.recive_openid
-    ,msgList = JSON.parse(options.msgList)
+    ,msgList = options.msgList && JSON.parse(options.msgList)
     // console.log(msgList)
     
     console.log(recive_openid)
+    //查询mgdb数据库获得对方的信息
     db.collection("soul_user").where({
       _openid: _.in([own_openid, recive_openid])
     }).get().then(res => {
       // console.log(res)
+      let own = res.data.filter(el => el._openid === own_openid)[0]
+        , recive = res.data.filter(el => el._openid === recive_openid)[0]
       this.setData({
         ["msgObj.own_openid"]: own_openid,
         ["msgObj.recive_openid"]: recive_openid,
-        ["msgObj.own_avatar"]: res.data.filter(el => el._openid === own_openid)[0].avatar,
-        ["msgObj.recive_avatar"]: res.data.filter(el => el._openid === recive_openid)[0].avatar,
+        ["msgObj.own_avatar"]: own.avatar,
+        ["msgObj.recive_avatar"]: recive.avatar,
+        ["msgObj.own_nick"]: own.nick,
+        ["msgObj.recive_nick"]: recive.nick,
       })
       // console.log(this.data.msgObj)
-      msgList.forEach(el => this.concatList(el))
+      //将从聊天页面的消息列表验证不为空后调用concatList将消息放入对应数组
+      msgList && msgList.forEach(el => this.concatList(el))
     }).catch(err => console.log(err))
   },
 
@@ -109,7 +118,7 @@ Page({
    * 将消息对象中数据放入own_list或recive_list
    */
   concatList(res) {
-    console.log(res)
+    // console.log(res)
     // 是我接收到信息,加载完后清空表单值
     if (res.recive_openid === this.data.msgObj.own_openid && res.own_openid === this.data.msgObj.recive_openid) {
       this.setData({
@@ -139,16 +148,16 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-    SocketTask.close(function(close) {
-      console.log('关闭 WebSocket 连接。', close)
-    })
+   
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    SocketTask.close(function (close) {
+      console.log('关闭 WebSocket 连接。', close)
+    })
   },
 
   /**

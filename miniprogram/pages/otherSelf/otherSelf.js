@@ -66,7 +66,7 @@ Page({
   },
   toP2pChat() {
     wx.navigateTo({
-      url: '/pages/p2pchat/p2pchat?_openid=' + this.data._openid,
+      url: '/pages/p2pchat/p2pchat?recive_openid=' + this.data._openid,
     })
   },
   //获取关注列表

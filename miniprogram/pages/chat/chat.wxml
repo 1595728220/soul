@@ -1,1 +1,8 @@
-<view bindtap="toP2pchat" data-id="otcZZ5GiW9ldjjfSbNx53XJrSFvQ">跳</view>
+<view wx:for="{{simpleList}}" wx:key="{{index}}">
+  <van-swipe-cell id="swipe-cell" right-width="{{ 58 }}" >
+    <van-cell-group >
+      <van-cell title="{{1}}" value="{{item.msg_time}}" bindtap="toP2pchat" data-id="{{item.own_openid}}" />
+    </van-cell-group>
+    <van-button slot="right" type="danger">删除</van-button>
+  </van-swipe-cell>
+</view>
