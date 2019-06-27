@@ -1,8 +1,1 @@
-<!--pages/chat/chat.wxml-->
- <van-field
-    value="{{ inputMsg }}"
-    placeholder="请输入要发送的内容"
-    bind:change="onChange"
-  />
-<button bindtap="sendSocketMessage">发送消息</button>
-
+<view bindtap="toP2pchat" data-id="otcZZ5GiW9ldjjfSbNx53XJrSFvQ">跳</view>

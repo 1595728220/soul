@@ -10,30 +10,56 @@ let wss = new WebSocket.Server({
 wss.on('connection', function(ws) {
   console.log('client connected')
   ws.on('message', function(message) {
-    console.log(message)
+    message = JSON.parse(message)
     let {
       own_openid,
       recive_openid,
-      msg
-    }
+      msg,
+      own_avatar,
+      recive_avatar
+    } = message
+
     let now = new Date().getTime()
-    let sql = "insert into chat values(null,?,?,?,?)"
-    pool.query(sql, [own_openid, recive_openid, msg, now], (err, result) => {
+    let sql = "insert into chat values(null,?,?,?,?,?,?)"
+    pool.query(sql, [own_openid, recive_openid, msg, now, own_avatar, recive_avatar], (err, result) => {
       if (err) throw err
-      if (result.affectedRow > 0) {
-        ws.send({
+      console.log(result)
+      console.log(ws.send)
+      if (result.affectedRows > 0) {
+        console.log("添加消息完成即将转发")
+        let tmp = {
           code: 1,
           msg: "有新消息",
           data: {
             own_openid,
             recive_openid,
             msg,
-            now
+            now,
+            own_avatar,
+            recive_avatar
           }
-        })
+        }
+        tmp = JSON.stringify(tmp)
+        wss.clients.forEach((client) =>{
+          if (client !== ws && client.readyState === WebSocket.OPEN) {
+            client.send(tmp);
+          }
+        });
       }
     })
   })
+  sql = "select * from chat"
+  pool.query(sql, (err, result) => {
+    if (err) throw err
+    let tmp = {
+      code: 2,
+      msg: "首次加载所有信息",
+      data: result
+    }
+    tmp = JSON.stringify(tmp)
+    ws.send(tmp)
+  })
+
 })
 
 app.listen(3000, function() {

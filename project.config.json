@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 5,
 			"list": [
 				{
 					"id": -1,
@@ -68,6 +68,13 @@
 					"name": "otherself",
 					"pathName": "pages/otherSelf/otherSelf",
 					"query": "_openid=otcZZ5GiW9ldjjfSbNx53XJrSFvQ",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "p2p",
+					"pathName": "pages/p2pchat/p2pchat",
+					"query": "recive_openid=\"otcZZ5GiW9ldjjfSbNx53XJrSFvQ\"",
 					"scene": null
 				}
 			]

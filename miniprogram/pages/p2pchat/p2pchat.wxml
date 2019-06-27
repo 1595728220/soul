@@ -1,2 +1,23 @@
 <!--pages/p2pchat/p2pchat.wxml-->
-<text>pages/p2pchat/p2pchat.wxml</text>
+<!--pages/chat/chat.wxml-->
+<view class="msg">
+  <view class="own" wx:for="{{own_list}}" wx:key="{{index}}">
+    <view class="image">
+      <image src="{{msgObj.own_avatar}}"></image>
+    </view>
+    <view class="square"></view>
+    <view class="qipao">{{item.msg}}</view>
+  </view>
+  <view class="recive" wx:for="{{recive_list}}" wx:key="{{index}}">
+    <view class="image">
+      <image src="{{msgObj.recive_avatar}}"></image>
+    </view>
+    <view class="square"></view>
+    <view class="qipao">{{item.msg}}</view>
+  </view>
+</view>
+<view class="sendButton">
+  <van-field value="{{ msgObj.msg }}" placeholder="请输入要发送的内容" bind:input="onChange" use-button-slot bind:confirm="sendSocketMessage">
+    <van-button slot="button" size="small" type="primary" bindtap="sendSocketMessage"  >发送</van-button>
+  </van-field>
+</view>

@@ -6,18 +6,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    scoketOpen: false,
-    msgList:[], //对象数组，对象保存用户id和最近的消息,
-    inputMsg:"",
-  },
-  onChange(val){
-    console.log(val)
-    this.setData({
-      inputMsg:val
-    })
+    socketOpen: false,
+    msgList: [], //对象数组，对象保存用户id和最近的消息,
   },
   connectChat() {
-    const socketMsgQueue = []
     wx.connectSocket({
       url: 'ws://127.0.0.1:8181'
     })
@@ -25,26 +17,30 @@ Page({
       this.setData({
         socketOpen: true
       })
-      // sendSocketMessage("走我")
-      console.log(res)
     })
     wx.onSocketMessage(res => {
       console.log(res)
-    })
-
-    function sendSocketMessage(msg) {
-      if (this.data.socketOpen) {
-        wx.sendSocketMessage({
-          data: msg
+      res = JSON.parse(res.data)
+      // console.log(res)
+      if (res.code === 2) {
+        this.setData({
+          msgList: res.data
         })
       }
-    }
+    })
+  },
+  toP2pchat(e) {
+    let id = e.target.dataset.id
+    wx.navigateTo({
+      url: '/pages/p2pchat/p2pchat?recive_openid=' + id+"&msgList="+JSON.stringify(this.data.msgList),
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     this.connectChat()
+
   },
 
   /**
@@ -65,14 +61,22 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    wx.closeSocket({
+      code: 1000,
+      complete: () => {
+        console.log("关闭socket连接")
+        this.setData({
+          socketOpen: false
+        })
+      }
+    })
   },
 
   /**
