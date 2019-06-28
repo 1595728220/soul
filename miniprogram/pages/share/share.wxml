@@ -1,3 +1,2 @@
 <!--pages/share/share.wxml-->
-<text>分享页面</text>
-<button open-type="share">分享</button>
+<button open-type="share" class="share">分享</button>

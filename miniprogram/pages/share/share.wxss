@@ -1,1 +1,6 @@
 /* pages/share/share.wxss */
+.share{
+  background: #4bbd47;
+  padding: 10rpx 40rpx;
+  color: #fff;
+}
