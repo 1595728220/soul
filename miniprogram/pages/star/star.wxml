@@ -1,4 +1,4 @@
 <!--pages/star/star.wxml-->
 <view class="star">
-  <canvas style="width:{{windowWidth}}px;height:{{windowHeight}}px" canvas-id="stage"></canvas>
+  <canvas style="width:{{windowWidth}}px;height:{{windowHeight}}px" canvas-id="stage" bindtap="clickStar"></canvas>
 </view>

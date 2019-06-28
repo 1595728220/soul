@@ -1,10 +1,7 @@
 // pages/star/star.js
 const gl = require("../../miniprogram_npm/gl-matrix/index.js")
 let m, p, v, points = []
-
-
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -15,12 +12,39 @@ Page({
     numOfPoints: 0,
     timer: null
   },
+  //当用户点击星球触发的时间
+  clickStar(e){
+    //获取鼠标的位置
+    let {x,y} = e.detail
+    console.log(x,y)
+    points.forEach(el=>{
+      console.log(el.ex,el.ey)
+      //计算鼠标点击位置与圆心的距离
+      let juli = this.juli(x,y,el.ex,el.ey)
+      // console.log(juli)
+      if(juli < el.er + 10 && el.opa > 0.3){
+        console.log("捕捉点击的点")
+        //跳转到对应的用户
+        wx.navigateTo({
+          url: '/pages/otherSelf/otherSelf?_openid='+el._openid,
+        })
+      }
+    })
+    console.log("用户点击")
+  },
+  //计算距离的方法，返回距离
+  juli(x1,y1,x2,y2){
+    let {sqrt,pow} = Math
+    return sqrt(pow(x1-x2,2)+pow(y1-y2,2))
+  },
+  //初始化数据
   init() {
     return new Promise(resolve => {
       console.log("获取所有用户列表")
       wx.cloud.database().collection("soul_user").get().then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         points = res.data
+        //保存当前用户数量
         this.setData({
           numOfPoints: points.length
         })
@@ -29,7 +53,6 @@ Page({
           let tmpObj = this.randomPoint()
           // console.log(points)
           Object.assign(points[i], tmpObj)
-          points = points.concat(this.randomPoint())
         }
 
         let eye, center, up
@@ -88,6 +111,10 @@ Page({
       gl.vec3.transformMat4(screenPoint, point, pvm);
       // draw point
       ctx.arc(screenPoint[0] * this.data.windowWidth / 2, screenPoint[1] * this.data.windowHeight / 2, pSize, 0, 2 * Math.PI);
+      points[i].ex = (1+screenPoint[0]) * this.data.windowWidth / 2
+      points[i].ey = (1+screenPoint[1]) * this.data.windowHeight / 2
+      points[i].er = pSize
+      points[i].opa = (1 - localPoint[2]) / 2
       ctx.fill()
       //draw text
       ctx.setFontSize(12)
