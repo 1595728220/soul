@@ -34,7 +34,9 @@ Component({
         if(!res.data[0]){
           console.log("请求不到数据")
           wx.hideLoading()
-          this.loadMsg()
+          wx.navigateBack({
+            delta: 1
+          })
           return 
         }
         console.log(res)

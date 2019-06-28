@@ -45,9 +45,9 @@ Page({
         //每个给我发消息的人只保留最后一条信息
           simpleList = simpleList.reverse().filter((el,i,arr)=>{
             let sign = false
-            console.log(el)
-            console.log(tmp)
-            console.log(tmp.indexOf(el.own_openid))
+            // console.log(el)
+            // console.log(tmp)
+            // console.log(tmp.indexOf(el.own_openid))
             if(tmp.indexOf(el.own_openid) === -1){
               tmp.push(el.own_openid)
               sign = true
@@ -65,6 +65,12 @@ Page({
   //点击跳转到私聊
   toP2pchat(e) {
     let id = e.target.dataset.id
+    //如果点击到删除按钮，不执行
+    // console.log(e.target.dataset.index)
+    if(!e.target.dataset.index){
+      return
+    }
+    console.log(e)
     wx.navigateTo({
       url: '/pages/p2pchat/p2pchat?recive_openid=' + id + "&msgList=" + JSON.stringify(this.data.msgList),
     })

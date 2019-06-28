@@ -77,6 +77,7 @@ Page({
     })
 
   },
+  //循环绘制点和文字
   loop() {
     // console.log("定时绘制")
     let ctx = this.data.ctx
@@ -131,6 +132,7 @@ Page({
       timer
     })
   },
+  //生成均匀分布的坐标点
   randomPoint() {
     //三维球面上的Marsaglia 方法
     let u, v, rpow

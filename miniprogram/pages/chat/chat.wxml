@@ -1,7 +1,7 @@
 <view wx:for="{{simpleList}}" wx:key="{{index}}">
-  <van-swipe-cell id="swipe-cell" right-width="{{ 80 }}">
-    <van-cell-group>
-      <van-cell value="{{item.msg_time}}" bindtap="toP2pchat" data-id="{{item.own_openid}}">
+  <van-swipe-cell id="swipe-cell" right-width="{{ 80 }}" bind:click="toP2pchat"  data-id="{{item.own_openid}}" isLink>
+    <van-cell-group >
+      <van-cell value="{{item.msg_time}}" >
         <view slot="title">
           <view class="van-my-title">
             <image class="van-image" src="{{item.own_avatar}}"></image>

@@ -7,6 +7,7 @@ Page({
   data: {
     showIndex:0
   },
+  //点击事件，修改当前显示的页面下标
   showComponet(e){
     let index = e.detail.index
     this.setData({

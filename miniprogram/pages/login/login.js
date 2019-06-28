@@ -34,6 +34,7 @@ Page({
     wx.showLoading({
       title: '正在登陆中',
     })
+    //将我的信息保存到全局
     getApp().globalData.userInfo = res.userInfo
     let {
       nickName: nick,
@@ -47,13 +48,15 @@ Page({
       _openid
     }).get().then(res => {
       console.log(res)
+      //如果云数据库中无登录的用户信息
       if (res.data.length === 0) {
         console.log("添加新用户信息")
+        //添加到云数据库
         db.collection("soul_user").add({
           data: {
             nick,
             avatar,
-            guanzhu:[]
+            guanzhu: []
           }
         }).then(res => {
           console.log("添加新用户成功")
@@ -61,13 +64,18 @@ Page({
           wx.showToast({
             title: '登陆成功',
           })
+          //成功后跳转到主页
           wx.switchTab({
             url: "/pages/square/square"
           })
 
         })
-      } else {
+      } //如果错误添加已有的用户，删除后添加的用户记录
+      else if (res.data.length > 1) {
+        db.collection("soul_user").doc(res.data[1]._id).remove()
+      } else { //不是新用户
         console.log("更新当前用户信息")
+        //更新最新的用户记录
         db.collection("soul_user").doc(res.data[0]._id).update({
           data: {
             nick,
@@ -81,15 +89,13 @@ Page({
           })
         })
       }
-      //如果错误添加已有的用户，删除后添加的用户记录
-      if(res.data.length > 1){
-        db.collection("soul_user").doc(res.data[1]._id).remove()
-      }
+
     }).catch(err => {
       console.log(err)
       wx.hideLoading()
     })
   },
+  //
   bindGetUserInfo: function(res) {
     // console.log(res)
     this.successLogin(res.detail)
