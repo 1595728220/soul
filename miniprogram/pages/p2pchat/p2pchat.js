@@ -15,11 +15,12 @@ Page({
       msg: "",
       own_avatar: "",
       recive_avatar: "",
-      own_nick:"",
-      recive_nick:""
+      own_nick: "",
+      recive_nick: ""
     },
     own_list: [],
-    recive_list: []
+    recive_list: [],
+    total_list: []
   },
   //用户输入消息时,将消息保存到消息对象中
   onChange(val) {
@@ -62,18 +63,32 @@ Page({
       // "otcZZ5OBn4W_F2xIOF7XWC8HvElk",
       recive_openid =
       // "otcZZ5GiW9ldjjfSbNx53XJrSFvQ"
-    options.recive_openid
-    ,msgList = options.msgList && JSON.parse(options.msgList)
+      options.recive_openid,
+      msgList = options.msgList && JSON.parse(options.msgList)
     // console.log(msgList)
-    
+
     console.log(recive_openid)
     //查询mgdb数据库获得对方的信息
     db.collection("soul_user").where({
       _openid: _.in([own_openid, recive_openid])
     }).get().then(res => {
       // console.log(res)
-      let own = res.data.filter(el => el._openid === own_openid)[0]
-        , recive = res.data.filter(el => el._openid === recive_openid)[0]
+      let own = res.data.filter(el => el._openid === own_openid)[0],
+        recive = res.data.filter(el => el._openid === recive_openid)[0]
+        //如果查询失败的话返回上一页面，让用户重新进入
+      if (!recive || !own) {
+        wx.showModal({
+          title: '错误',
+          content: '加载数据失败，请重新进入',
+          confirmText:"确定",
+          complete(){
+            wx.navigateBack({
+              delta:1
+            })
+          }
+        })
+       
+      }
       this.setData({
         ["msgObj.own_openid"]: own_openid,
         ["msgObj.recive_openid"]: recive_openid,
@@ -121,15 +136,17 @@ Page({
     // console.log(res)
     // 是我接收到信息,加载完后清空表单值
     if (res.recive_openid === this.data.msgObj.own_openid && res.own_openid === this.data.msgObj.recive_openid) {
+      res.who = "recive"
       this.setData({
-        recive_list: this.data.recive_list.concat([res]),
+        total_list: this.data.total_list.concat([res]),
         ["msgObj.msg"]: ""
       })
     }
     // 是我发的信息,加载完后清空表单值
     if (res.recive_openid === this.data.msgObj.recive_openid && res.own_openid === this.data.msgObj.own_openid) {
+      res.who = "own"
       this.setData({
-        own_list: this.data.own_list.concat([res]),
+        total_list: this.data.total_list.concat([res]),
         ["msgObj.msg"]: ""
       })
     }
@@ -148,14 +165,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-   
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-    SocketTask.close(function (close) {
+    SocketTask.close(function(close) {
       console.log('关闭 WebSocket 连接。', close)
     })
   },

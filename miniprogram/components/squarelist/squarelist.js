@@ -31,6 +31,12 @@ Component({
       db.collection("soul_user").where({
         _openid: getApp().globalData.openId
       }).get().then(res => {
+        if(!res.data[0]){
+          console.log("请求不到数据")
+          wx.hideLoading()
+          this.loadMsg()
+          return 
+        }
         console.log(res)
         guanzhu = res.data[0].guanzhu
         //创建查询条件的对象

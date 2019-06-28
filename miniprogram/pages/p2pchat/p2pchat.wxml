@@ -1,16 +1,10 @@
 <!--pages/p2pchat/p2pchat.wxml-->
 <!--pages/chat/chat.wxml-->
 <view class="msg">
-  <view class="own" wx:for="{{own_list}}" wx:key="{{index}}">
+  <view  wx:for="{{total_list}}" wx:key="{{index}}" class="{{item.who}}">
     <view class="image">
-      <image src="{{msgObj.own_avatar}}"></image>
-    </view>
-    <view class="square"></view>
-    <view class="qipao">{{item.msg}}</view>
-  </view>
-  <view class="recive" wx:for="{{recive_list}}" wx:key="{{index}}">
-    <view class="image">
-      <image src="{{msgObj.recive_avatar}}"></image>
+      <image src="{{msgObj.own_avatar}}" wx:if="{{item.who === 'own'}}"></image>
+      <image src="{{msgObj.recive_avatar}}" wx:if="{{item.who === 'recive'}}"></image>
     </view>
     <view class="square"></view>
     <view class="qipao">{{item.msg}}</view>

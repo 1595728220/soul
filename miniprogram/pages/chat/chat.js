@@ -29,23 +29,27 @@ Page({
         this.setData({
           msgList: res.data
         })
+        //将我的消息本地化
+        let simpleList = this.data.simpleList,tmp = []
         //筛选出发送给我的消息
-        this.setData({
-          simpleList: this.data.msgList.filter(el => {
+        
+          simpleList = this.data.msgList.filter(el => {
             return el.recive_openid === getApp().globalData.openId
           })
-        })
+       
         //如果没有我的消息,退出函数
-        if(this.data.simpleList.length === 0){
+        if(simpleList.length === 0){
           return
         }
-        //将我的信息本地化
-        let simpleList = this.data.simpleList,tmp = []
+        // console.log(simpleList)
         //每个给我发消息的人只保留最后一条信息
           simpleList = simpleList.reverse().filter((el,i,arr)=>{
             let sign = false
-            if(tmp.indexOf(el.own_openId) === -1){
-              tmp.push(el.own_openId)
+            console.log(el)
+            console.log(tmp)
+            console.log(tmp.indexOf(el.own_openid))
+            if(tmp.indexOf(el.own_openid) === -1){
+              tmp.push(el.own_openid)
               sign = true
             }
             el.msg_time = new Date(el.msg_time).toLocaleString()
@@ -54,7 +58,7 @@ Page({
         this.setData({
           simpleList
         })
-        console.log(simpleList)
+        // console.log(simpleList)
       }
     })
   },
