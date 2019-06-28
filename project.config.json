@@ -7,16 +7,17 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"nodeModules": true,
+		"nodeModules": false,
 		"autoAudits": false,
 		"uglifyFileName": false,
 		"checkInvalidKey": true
 	},
 	"appid": "wx832aadcdaf07f2a0",
 	"projectname": "wx",
-	"libVersion": "2.7.2",
+	"libVersion": "2.2.5",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"compileType": "miniprogram",
 	"condition": {
 		"search": {
 			"current": -1,
