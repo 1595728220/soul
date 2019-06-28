@@ -22,7 +22,7 @@ Page({
       //计算鼠标点击位置与圆心的距离
       let juli = this.juli(x,y,el.ex,el.ey)
       // console.log(juli)
-      if(juli < el.er + 10 && el.opa > 0.3){
+      if(juli < el.er + 20 && el.opa > 0.3){
         console.log("捕捉点击的点")
         //跳转到对应的用户
         wx.navigateTo({
