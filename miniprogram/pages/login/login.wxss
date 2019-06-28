@@ -1,1 +1,22 @@
 /* miniprogram/pages/login/login.wxss */
+
+.login {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.login>image {
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: 10rpx;
+}
+
+.login>button {
+  margin-top: 50rpx;
+  background: #4bbd47;
+  padding: 10rpx 40rpx;
+  color: #fff;
+}
