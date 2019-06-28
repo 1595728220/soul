@@ -65,12 +65,6 @@ Page({
   //点击跳转到私聊
   toP2pchat(e) {
     let id = e.target.dataset.id
-    //如果点击到删除按钮，不执行
-    // console.log(e.target.dataset.index)
-    if(!e.target.dataset.index){
-      return
-    }
-    console.log(e)
     wx.navigateTo({
       url: '/pages/p2pchat/p2pchat?recive_openid=' + id + "&msgList=" + JSON.stringify(this.data.msgList),
     })

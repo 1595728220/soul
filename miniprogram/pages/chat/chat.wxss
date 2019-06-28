@@ -16,7 +16,6 @@
 .van-my-title>view>view:last-child{
   font-size:28rpx;
   color:#999;
-  text-align: right
 }
  .van-cell__value{
   font-size:24rpx;
@@ -28,6 +27,7 @@
 #swipe-cell .van-button{
   height:100%;
   line-height:68px;
+  /* z-index:100; */
 }
 .zanwu{
   width:400rpx;
