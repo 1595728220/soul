@@ -1,8 +1,25 @@
 <view wx:for="{{simpleList}}" wx:key="{{index}}">
-  <van-swipe-cell id="swipe-cell" right-width="{{ 58 }}" >
-    <van-cell-group >
-      <van-cell title="{{1}}" value="{{item.msg_time}}" bindtap="toP2pchat" data-id="{{item.own_openid}}" />
+  <van-swipe-cell id="swipe-cell" right-width="{{ 80 }}">
+    <van-cell-group>
+      <van-cell value="{{item.msg_time}}" bindtap="toP2pchat" data-id="{{item.own_openid}}">
+        <view slot="title">
+          <view class="van-my-title">
+            <image class="van-image" src="{{item.own_avatar}}"></image>
+            <view>
+              <view>
+                {{item.own_nick}}
+              </view>
+              <view>
+                {{item.msg}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </van-cell>
     </van-cell-group>
-    <van-button slot="right" type="danger">删除</van-button>
+    <van-button slot="right" type="danger" bind:click="deleteTmp" data-index="{{index}}">删除</van-button>
   </van-swipe-cell>
+</view>
+<view wx:if="{{simpleList.length === 0}}">
+  <image src="../../images/chat/wu.png" class="zanwu"></image>
 </view>

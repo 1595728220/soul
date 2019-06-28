@@ -44,7 +44,7 @@ Page({
   // 创建连接
   connectChat() {
     SocketTask = wx.connectSocket({
-      url: 'wss://soul.urlip.cn:8181',
+      url: 'ws://127.0.0.1:8181',
       success(res) {
         console.log("连接成功")
       },

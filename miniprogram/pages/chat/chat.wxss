@@ -1,1 +1,40 @@
 /* pages/chat/chat.wxss */
+.van-my-title{
+  display:flex;
+  align-items: flex-start;
+}
+.van-image{
+ width:96rpx;
+ height:96rpx;
+ border-radius:10rpx; 
+ border:1px solid #ddd;
+}
+.van-my-title>view{
+  font-size:30rpx;
+  margin-left:10rpx;
+}
+.van-my-title>view>view:last-child{
+  font-size:28rpx;
+  color:#999;
+  text-align: right
+}
+ .van-cell__value{
+  font-size:24rpx;
+  align-self: center;
+}
+#swipe-cell  .van-button--normal{
+  padding:0 50rpx;
+}
+#swipe-cell .van-button{
+  height:100%;
+  line-height:68px;
+}
+.zanwu{
+  width:400rpx;
+  height:430rpx;
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  
+}

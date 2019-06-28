@@ -13,7 +13,7 @@ Page({
   },
   connectChat() {
     wx.connectSocket({
-      url: 'wss://soul.urlip.cn:8181'
+      url: 'ws://127.0.0.1:8181'
     })
     wx.onSocketOpen(res => {
       this.setData({
@@ -48,19 +48,30 @@ Page({
               tmp.push(el.own_openId)
               sign = true
             }
+            el.msg_time = new Date(el.msg_time).toLocaleString()
             return sign
           })
-        simpleList.msg_time = new Date(simpleList.msg_time).toLocaleString()
         this.setData({
-          ["simpleList.msg_time"]:time
+          simpleList
         })
+        console.log(simpleList)
       }
     })
   },
+  //点击跳转到私聊
   toP2pchat(e) {
     let id = e.target.dataset.id
     wx.navigateTo({
       url: '/pages/p2pchat/p2pchat?recive_openid=' + id + "&msgList=" + JSON.stringify(this.data.msgList),
+    })
+  },
+  deleteTmp(e){
+    console.log("删除当前消息列表指定下标的消息")
+    let index = e.target.dataset.index
+    let simpleList = this.data.simpleList
+    simpleList.splice(index, 1)
+    this.setData({
+      simpleList
     })
   },
   /**
